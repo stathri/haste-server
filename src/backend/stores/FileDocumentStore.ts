@@ -27,7 +27,7 @@ export class FileDocumentStore extends BaseDocumentStore {
 	 */
 	public override async get(key: string): Promise<string | null> {
 		try {
-			const path = `${this.#basePath}/${this.md5(key)}`;
+			const path = `${this.#basePath}/${key}`;
 			return await readFile(path, 'utf-8');
 		} catch {
 			return null;
@@ -42,7 +42,7 @@ export class FileDocumentStore extends BaseDocumentStore {
 	 */
 	public override async set(key: string, data: string | Buffer): Promise<boolean> {
 		try {
-			const path = `${this.#basePath}/${this.md5(key)}`;
+			const path = `${this.#basePath}/${key}`;
 			await mkdir(this.#basePath, { mode: 0o700, recursive: true });
 			await writeFile(path, data, 'utf-8');
 			return true;
