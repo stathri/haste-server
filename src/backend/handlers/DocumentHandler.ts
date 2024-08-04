@@ -62,7 +62,7 @@ export class DocumentHandler {
 		const typedBody = request.body as string;
 
 		const key = await this.chooseKey();
-		const storeResult = await this.#store.set(request.body.key || key, typedBody);
+		const storeResult = await this.#store.set(request.query.key || key, typedBody);
 
 		if (storeResult) {
 			return reply.code(201).send({ key: request.query.key || key });
@@ -83,6 +83,6 @@ export class DocumentHandler {
 	}
 
 	private acceptableKey() {
-		return createKey(this.#keyLength);
+		return createKey();
 	}
 }
